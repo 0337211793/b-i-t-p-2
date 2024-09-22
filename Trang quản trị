@@ -1,0 +1,33 @@
+<?php
+include '../config/db.php';
+
+// Truy vấn tất cả thành viên và vị trí hiện tại
+$query = $pdo->query("SELECT * FROM members");
+$members = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị viên</title>
+</head>
+<body>
+    <h1>Quản lý thành viên và vị trí</h1>
+    <table border="1">
+        <tr>
+            <th>Tên thành viên</th>
+            <th>Vị trí hiện tại</th>
+        </tr>
+        <?php foreach ($members as $member): ?>
+        <tr>
+            <td><?php echo $member['name']; ?></td>
+            <td><?php echo $member['location']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <a href="update.php">Cập nhật vị trí của thành viên</a>
+</body>
+</html>
