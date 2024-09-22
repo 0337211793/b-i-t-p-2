@@ -1,0 +1,21 @@
+-- Tạo cơ sở dữ liệu
+CREATE DATABASE ClassMonitoring;
+GO
+
+USE ClassMonitoring;
+GO
+
+-- Tạo bảng "Members" để lưu thông tin thành viên
+CREATE TABLE Members (
+    id INT PRIMARY KEY IDENTITY(1,1),   -- ID tự động tăng
+    name NVARCHAR(255) NOT NULL,        -- Tên thành viên
+    location NVARCHAR(50) NOT NULL DEFAULT N'Không rõ' -- Vị trí hiện tại
+);
+GO
+
+-- Thêm một số thành viên mẫu
+INSERT INTO Members (name, location) VALUES
+(N'Nguyễn Văn A', N'KTX'),
+(N'Trần Thị B', N'Nhà trọ'),
+(N'Lê Văn C', N'Không rõ');
+GO
