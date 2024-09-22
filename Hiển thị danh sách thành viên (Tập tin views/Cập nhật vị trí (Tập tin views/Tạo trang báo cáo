@@ -1,0 +1,44 @@
+<?php
+include 'config/db.php';
+
+// Truy vấn thời điểm tất cả thành viên đều ở trường
+$query = $pdo->query("
+    SELECT h.change_time
+    FROM MemberLocationHistory h
+    JOIN Members m ON h.member_id = m.id
+    WHERE h.new_location = 'Trường'
+    GROUP BY h.change_time
+    HAVING COUNT(DISTINCT m.id) = (SELECT COUNT(*) FROM Members)
+");
+$report_times = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo thành viên ở trường</title>
+</head>
+<body>
+    <h1>Báo cáo thời điểm tất cả các thành viên đều có ở trường</h1>
+    <table border="1">
+        <tr>
+            <th>Thời gian</th>
+        </tr>
+        <?php if (count($report_times) > 0): ?>
+            <?php foreach ($report_times as $time): ?>
+            <tr>
+                <td><?php echo $time['change_time']; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td>Không có thời điểm nào.</td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+    <a href="index.php">Trở lại trang chủ</a>
+</body>
+</html>
