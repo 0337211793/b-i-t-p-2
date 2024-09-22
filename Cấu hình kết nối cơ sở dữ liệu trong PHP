@@ -1,0 +1,14 @@
+<?php
+$serverName = "localhost"; // Địa chỉ server của SQL Server
+$database = "ClassMonitoring"; // Tên cơ sở dữ liệu
+$username = "sa"; // Tên người dùng SQL Server
+$password = "your_password"; // Mật khẩu của SQL Server
+
+try {
+    // Kết nối PDO với SQL Server
+    $pdo = new PDO("sqlsrv:server=$serverName;Database=$database", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Lỗi kết nối cơ sở dữ liệu: " . $e->getMessage());
+}
+?>
