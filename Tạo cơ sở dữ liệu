@@ -1,0 +1,15 @@
+
+CREATE DATABASE class_monitoring;
+
+USE class_monitoring;
+
+CREATE TABLE members (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    location VARCHAR(50) NOT NULL DEFAULT 'Không rõ'
+);
+
+INSERT INTO members (name, location) VALUES
+('Nguyễn Văn A', 'KTX'),
+('Trần Thị B', 'Nhà trọ'),
+('Lê Văn C', 'Không rõ');
