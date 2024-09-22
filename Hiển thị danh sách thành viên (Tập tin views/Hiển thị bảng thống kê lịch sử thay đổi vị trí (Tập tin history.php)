@@ -1,0 +1,42 @@
+<?php
+include 'config/db.php';
+
+// Truy vấn lịch sử thay đổi vị trí
+$query = $pdo->query("
+    SELECT m.name, h.old_location, h.new_location, h.change_time
+    FROM MemberLocationHistory h
+    JOIN Members m ON h.member_id = m.id
+    ORDER BY h.change_time DESC
+");
+$history = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử thay đổi vị trí</title>
+</head>
+<body>
+    <h1>Lịch sử thay đổi vị trí của các thành viên</h1>
+    <table border="1">
+        <tr>
+            <th>Tên thành viên</th>
+            <th>Vị trí cũ</th>
+            <th>Vị trí mới</th>
+            <th>Thời gian thay đổi</th>
+        </tr>
+        <?php foreach ($history as $record): ?>
+        <tr>
+            <td><?php echo $record['name']; ?></td>
+            <td><?php echo $record['old_location']; ?></td>
+            <td><?php echo $record['new_location']; ?></td>
+            <td><?php echo $record['change_time']; ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <a href="index.php">Trở lại trang chủ</a>
+</body>
+</html>
