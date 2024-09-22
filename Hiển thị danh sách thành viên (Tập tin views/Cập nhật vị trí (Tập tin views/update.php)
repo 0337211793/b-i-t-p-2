@@ -1,0 +1,50 @@
+<?php
+include '../config/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $location = $_POST['location'];
+
+    // Cập nhật vị trí thành viên
+    $stmt = $pdo->prepare("UPDATE Members SET location = ? WHERE id = ?");
+    $stmt->execute([$location, $id]);
+
+    echo "Cập nhật thành công! <a href='index.php'>Trở lại danh sách</a>";
+    exit();
+}
+
+// Truy vấn tất cả thành viên
+$query = $pdo->query("SELECT * FROM Members");
+$members = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật vị trí</title>
+</head>
+<body>
+    <h1>Cập nhật vị trí</h1>
+    <form method="POST" action="update.php">
+        <label for="id">Chọn thành viên:</label>
+        <select name="id" required>
+            <?php foreach ($members as $member): ?>
+            <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="location">Chọn vị trí:</label>
+        <select name="location" required>
+            <option value="KTX">KTX</option>
+            <option value="Nhà trọ">Nhà trọ</option>
+            <option value="Trường">Trường</option>
+            <option value="Chợ">Chợ</option>
+            <option value="Không rõ">Không rõ</option>
+        </select>
+
+        <button type="submit">Cập nhật</button>
+    </form>
+</body>
+</html>
